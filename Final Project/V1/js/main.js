@@ -30,7 +30,8 @@ let character = {
     health: 100,
     water: 100,
     food: 100,
-    tribe: ""
+    tribe: "",
+    gender:""
 }
 
 // some parameters for our scene

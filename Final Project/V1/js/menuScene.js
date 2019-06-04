@@ -34,6 +34,7 @@ menuScene.create = function() {
 
 }
 
+// Asking for tribe
 function tribeQuestion() {
   // CHOOSING TRIBE OUT OF 3 AND DESTROYING BUTTONS
   let tribeChoice = menuScene.add.sprite(gameWidth / 2, 220, 'tribeText');
@@ -75,15 +76,27 @@ function tribeQuestion() {
 
 }
 
+// Asking for gender of player
 function genderQuestion() {
+  let genderText = menuScene.add.sprite(gameWidth / 2, 220, 'genderText');
+
   let male = menuScene.add.sprite(gameWidth / 2, 300, 'male');
   interactive(male);
+  male.on('pointerdown', function() {
+    character.gender = "male";
+  });
 
   let female = menuScene.add.sprite(gameWidth / 2, 350, 'female');
   interactive(female);
+  male.on('pointerdown', function() {
+    character.gender = "female";
+  });
 
   let nonBinary = menuScene.add.sprite(gameWidth / 2, 400, 'nonBinary');
   interactive(nonBinary);
+  male.on('pointerdown', function() {
+    character.gender = "non-Binary";
+  });
 
 }
 
