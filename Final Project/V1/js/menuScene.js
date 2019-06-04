@@ -3,6 +3,9 @@ let menuScene = new Phaser.Scene('Menu');
 
 let gameWidth;
 let gameHeight;
+let name = "";
+let playerName, nameText;
+let updateSpeed = 0;
 
 menuScene.preload = function() {
 
@@ -13,6 +16,12 @@ menuScene.preload = function() {
   background.depth = -10;
   background.width = config.width;
   background.height = config.height;
+
+  playerName = this.add.text((gameWidth / 2) - 150, 300, "");
+
+  setupKeys();
+
+
 }
 
 menuScene.create = function() {
@@ -30,7 +39,7 @@ menuScene.create = function() {
   // ASK PLAYER FOR THEIR TRIBE
   tribeQuestion();
 
-  // AFTER, genderQuestion WILL RUN
+  // AFTER tribeQuestion, genderQuestion WILL RUN
 
 }
 
@@ -84,22 +93,146 @@ function genderQuestion() {
   interactive(male);
   male.on('pointerdown', function() {
     character.gender = "male";
+    genderText.destroy();
+    male.destroy();
+    female.destroy();
+    nonBinary.destroy();
+    nameQuestion();
   });
 
   let female = menuScene.add.sprite(gameWidth / 2, 350, 'female');
   interactive(female);
-  male.on('pointerdown', function() {
+  female.on('pointerdown', function() {
     character.gender = "female";
+    genderText.destroy();
+    male.destroy();
+    female.destroy();
+    nonBinary.destroy();
+    nameQuestion();
   });
 
   let nonBinary = menuScene.add.sprite(gameWidth / 2, 400, 'nonBinary');
   interactive(nonBinary);
-  male.on('pointerdown', function() {
+  nonBinary.on('pointerdown', function() {
     character.gender = "non-Binary";
+    genderText.destroy();
+    male.destroy();
+    female.destroy();
+    nonBinary.destroy();
+    nameQuestion();
   });
 
 }
+function nameQuestion() {
+playerName = menuScene.add.text(gameWidth / 2 - 50, 260, "");
+playerName.setScale(2);
+nameText = menuScene.add.sprite((gameWidth / 2) - 100, 275, 'name');
+nameText.setScale(0.5);
 
+
+}
+
+menuScene.update = function (time, delta) {
+  updateName();
+};
+
+// Ugly functions to get user keyboard input
+
+function setupKeys() {
+  aKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+  bKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+  cKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+  dKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+  eKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+  fKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+  gKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+  hKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+  iKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+  jKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
+  kKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
+  lKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
+  mKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+  nKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
+  oKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+  pKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+  qKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+  rKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+  sKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+  tKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+  uKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.U);
+  vKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+  wKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+  xKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+  yKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y);
+  zKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+  deleteKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
+
+}
+function updateName() {
+  if (updateSpeed > 7) {
+    if (aKey.isDown) {
+      name += "A";
+    } else if (bKey.isDown) {
+      name += "B";
+    } else if (cKey.isDown) {
+      name += "C";
+    } else if (dKey.isDown) {
+      name += "D";
+    } else if (eKey.isDown) {
+      name += "E";
+    } else if (fKey.isDown) {
+      name += "F";
+    } else if (gKey.isDown) {
+      name += "G";
+    } else if (hKey.isDown) {
+      name += "H";
+    } else if (iKey.isDown) {
+      name += "I";
+    } else if (jKey.isDown) {
+      name += "J";
+    } else if (kKey.isDown) {
+      name += "K";
+    } else if (lKey.isDown) {
+      name += "L";
+    } else if (mKey.isDown) {
+      name += "M";
+    } else if (nKey.isDown) {
+      name += "N";
+    } else if (oKey.isDown) {
+      name += "O";
+    } else if (pKey.isDown) {
+      name += "P";
+    } else if (qKey.isDown) {
+      name += "Q";
+    } else if (rKey.isDown) {
+      name += "R";
+    } else if (sKey.isDown) {
+      name += "S";
+    } else if (tKey.isDown) {
+      name += "T";
+    } else if (uKey.isDown) {
+      name += "U";
+    } else if (vKey.isDown) {
+      name += "V";
+    } else if (wKey.isDown) {
+      name += "W";
+    } else if (xKey.isDown) {
+      name += "X";
+    } else if (yKey.isDown) {
+      name += "Y";
+    } else if (zKey.isDown) {
+      name += "Z";
+    } else if (deleteKey.isDown) {
+      name = name.substring(0, name.length - 1)
+    }
+    updateSpeed = 0;
+
+    playerName.setText(name);
+  }
+  updateSpeed++;
+}
+
+// To make a sprite interactive
 function interactive(button) {
   button.setInteractive();
   button.setScale(0.5);
@@ -109,7 +242,7 @@ function interactive(button) {
       targets: button,
       scaleX: 0.8,
       scaleY: 0.8,
-      duration: 300,
+      duration: 200,
       yoyo: true,
       ease: 'Quad.easeIn',
       // onStart: function(){
@@ -123,7 +256,7 @@ function interactive(button) {
       targets: button,
       scaleX: 0.5,
       scaleY: 0.5,
-      duration: 300,
+      duration: 200,
       yoyo: true,
       ease: 'Quad.easeIn',
       // onStart: function(){
