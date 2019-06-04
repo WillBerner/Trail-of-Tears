@@ -30,6 +30,7 @@ let character = {
     health: 100,
     water: 100,
     food: 100,
+    tribe: ""
 }
 
 // some parameters for our scene
@@ -47,10 +48,7 @@ gameScene.create = function() {
     this.background.depth = -10;
     this.background.width = config.width;
     this.background.height = config.height;
-
     this.character = this.add.sprite(400, 400, 'indian');
-
-
 
 
 };

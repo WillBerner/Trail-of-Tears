@@ -53,6 +53,10 @@ loadingScene.preload = function() {
     this.load.image('start', 'assets/images/startButton.png');
     this.load.image('indian', 'assets/images/indian.jpeg');
     this.load.image('menuBackground', "assets/images/menuBackground.jpg");
+    this.load.image('tribeText', 'assets/images/tribeText.png');
+    this.load.image('cherokeeText', 'assets/images/cherokeeText.png');
+    this.load.image('choctawText', 'assets/images/choctawText.png');
+    this.load.image('muskogeeText', 'assets/images/muskogeeText.png');
 
 };
 
