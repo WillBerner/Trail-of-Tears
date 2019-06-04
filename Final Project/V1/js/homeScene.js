@@ -9,7 +9,7 @@ homeScene.create = function() {
     let gameWidth = this.sys.game.config.width;
     let gameHeight = this.sys.game.config.height;
     let h= 5;
-    
+
 
     let background = this.add.sprite(0,0,'background');
     background.setOrigin(0,0);
@@ -25,7 +25,7 @@ homeScene.create = function() {
     startButton.depth = 10;
     startButton.setInteractive();
     startButton.on('pointerdown', function(){
-        this.scene.start('Game');
+        this.scene.start('Menu');
     }, this);
     makeInteractive(startButton);
 };
