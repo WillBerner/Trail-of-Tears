@@ -18,9 +18,11 @@ menuScene.create = function() {
   let gameWidth = this.sys.game.config.width;
   let gameHeight = this.sys.game.config.height;
 
-  // Setting up menu
+  // SETTING UP BACKGROUND
   let background = this.add.sprite(gameWidth / 2, 300, 'menuBackground');
   background.setScale(1.2);
+
+  // CHOOSING TRIBE OUT OF 3
   let tribeChoice = this.add.sprite(gameWidth / 2, 220, 'tribeText');
   tribeChoice.setScale(1);
 
@@ -29,7 +31,10 @@ menuScene.create = function() {
   interactive(cherokee);
   cherokee.on('pointerdown', function() {
     character.tribe = "Cherokee";
-    console.log(character);
+    tribeChoice.destroy();
+    choctaw.destroy();
+    cherokee.destroy();
+    muskogee.destroy();
   });
 
   let choctaw = this.add.sprite(gameWidth / 2, 350, 'choctawText');
@@ -37,18 +42,24 @@ menuScene.create = function() {
   interactive(choctaw);
   choctaw.on('pointerdown', function() {
     character.tribe = "Choctaw";
+    tribeChoice.destroy();
+    choctaw.destroy();
+    cherokee.destroy();
+    muskogee.destroy();
   });
-
 
   let muskogee = this.add.sprite(gameWidth / 2, 400, 'muskogeeText');
   muskogee.setScale(0.5);
   interactive(muskogee);
   muskogee.on('pointerdown', function() {
     character.tribe = "Muskogee";
+    tribeChoice.destroy();
+    choctaw.destroy();
+    cherokee.destroy();
+    muskogee.destroy();
   });
 
 }
-
 
 function interactive(button) {
   button.setInteractive();

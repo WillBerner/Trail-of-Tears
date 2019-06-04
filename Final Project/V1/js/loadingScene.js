@@ -58,6 +58,11 @@ loadingScene.preload = function() {
     this.load.image('choctawText', 'assets/images/choctawText.png');
     this.load.image('muskogeeText', 'assets/images/muskogeeText.png');
 
+    this.load.image('male', 'assets/images/male.png');
+    this.load.image('female', 'assets/images/female.png');
+    this.load.image('genderText', 'assets/images/genderText.png');
+    this.load.image('nonBinary', 'assets/images/nonBinary.png');
+
 };
 
 loadingScene.create = function() {

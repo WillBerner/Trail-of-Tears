@@ -33,7 +33,6 @@ homeScene.update = function (time, delta) {
 
 };
 
-
 function makeInteractive(item){
     item.setInteractive();
     item.on('pointerdown', function(pointer){
