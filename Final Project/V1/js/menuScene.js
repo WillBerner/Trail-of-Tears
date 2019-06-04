@@ -1,6 +1,9 @@
 // create a new scene
 let menuScene = new Phaser.Scene('Menu');
 
+let gameWidth;
+let gameHeight;
+
 menuScene.preload = function() {
 
   console.log("Started Scene: Menu");
@@ -15,19 +18,28 @@ menuScene.preload = function() {
 menuScene.create = function() {
 
   // Storing the width and height for easy access
-  let gameWidth = this.sys.game.config.width;
-  let gameHeight = this.sys.game.config.height;
+  let width = this.sys.game.config.width;
+  let height = this.sys.game.config.height;
+  gameWidth = width;
+  gameHeight = height;
 
   // SETTING UP BACKGROUND
   let background = this.add.sprite(gameWidth / 2, 300, 'menuBackground');
   background.setScale(1.2);
 
-  // CHOOSING TRIBE OUT OF 3
-  let tribeChoice = this.add.sprite(gameWidth / 2, 220, 'tribeText');
+  // ASK PLAYER FOR THEIR TRIBE
+  tribeQuestion();
+
+  // AFTER, genderQuestion WILL RUN
+
+}
+
+function tribeQuestion() {
+  // CHOOSING TRIBE OUT OF 3 AND DESTROYING BUTTONS
+  let tribeChoice = menuScene.add.sprite(gameWidth / 2, 220, 'tribeText');
   tribeChoice.setScale(1);
 
-  let cherokee = this.add.sprite(gameWidth / 2, 300, 'cherokeeText');
-  cherokee.setScale(0.5);
+  let cherokee = menuScene.add.sprite(gameWidth / 2, 300, 'cherokeeText');
   interactive(cherokee);
   cherokee.on('pointerdown', function() {
     character.tribe = "Cherokee";
@@ -35,10 +47,10 @@ menuScene.create = function() {
     choctaw.destroy();
     cherokee.destroy();
     muskogee.destroy();
+    genderQuestion();
   });
 
-  let choctaw = this.add.sprite(gameWidth / 2, 350, 'choctawText');
-  choctaw.setScale(0.5);
+  let choctaw = menuScene.add.sprite(gameWidth / 2, 350, 'choctawText');
   interactive(choctaw);
   choctaw.on('pointerdown', function() {
     character.tribe = "Choctaw";
@@ -46,10 +58,10 @@ menuScene.create = function() {
     choctaw.destroy();
     cherokee.destroy();
     muskogee.destroy();
+    genderQuestion();
   });
 
-  let muskogee = this.add.sprite(gameWidth / 2, 400, 'muskogeeText');
-  muskogee.setScale(0.5);
+  let muskogee = menuScene.add.sprite(gameWidth / 2, 400, 'muskogeeText');
   interactive(muskogee);
   muskogee.on('pointerdown', function() {
     character.tribe = "Muskogee";
@@ -57,12 +69,27 @@ menuScene.create = function() {
     choctaw.destroy();
     cherokee.destroy();
     muskogee.destroy();
+    genderQuestion();
   });
+
+
+}
+
+function genderQuestion() {
+  let male = menuScene.add.sprite(gameWidth / 2, 300, 'male');
+  interactive(male);
+
+  let female = menuScene.add.sprite(gameWidth / 2, 350, 'female');
+  interactive(female);
+
+  let nonBinary = menuScene.add.sprite(gameWidth / 2, 400, 'nonBinary');
+  interactive(nonBinary);
 
 }
 
 function interactive(button) {
   button.setInteractive();
+  button.setScale(0.5);
 
   button.on('pointerover', function() {
     button.onClickTween = menuScene.tweens.add({
