@@ -8,7 +8,7 @@ let config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
-  scene: [bootScene, loadingScene, homeScene, gameScene],
+  scene: [bootScene, loadingScene, homeScene, gameScene, menuScene],
   title: 'Phaser3 Project',
   pixelArt: false, //Use anti-aliasing
   backgroundColor: '#ffffff' // white background by default

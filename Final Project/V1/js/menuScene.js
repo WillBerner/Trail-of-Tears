@@ -18,6 +18,8 @@ menuScene.create = function() {
   let gameWidth = this.sys.game.config.width;
   let gameHeight = this.sys.game.config.height;
 
+  let background = this.add.sprite(gameWidth / 2, 300, 'menuBackground');
+
 
 
 }

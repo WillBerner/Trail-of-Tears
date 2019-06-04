@@ -8,8 +8,6 @@ homeScene.create = function() {
     // Storing the width and height for easy access
     let gameWidth = this.sys.game.config.width;
     let gameHeight = this.sys.game.config.height;
-    let h= 5;
-
 
     let background = this.add.sprite(0,0,'background');
     background.setOrigin(0,0);
@@ -31,7 +29,7 @@ homeScene.create = function() {
 };
 
 // this is called up to 60 times per second
-gameScene.update = function (time, delta) {
+homeScene.update = function (time, delta) {
 
 };
 

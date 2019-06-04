@@ -52,6 +52,7 @@ loadingScene.preload = function() {
     this.load.image('title', 'assets/images/titleButton.png');
     this.load.image('start', 'assets/images/startButton.png');
     this.load.image('indian', 'assets/images/indian.jpeg');
+    this.load.image('menuBackground', "assets/images/menuBackground.jpg");
 
 };
 
