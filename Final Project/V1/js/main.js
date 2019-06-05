@@ -91,7 +91,7 @@ gameScene.create = function() {
     if (character.gender == "female") {
         chief = this.add.sprite(config.width - 75, 100, 'femaleChar')
         player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'femaleSprite')
-        player.setScale(0.2);
+        player.setScale(0.1);
         player.body.allowGravity = false;
     }
         chief.displayWidth = 150;
