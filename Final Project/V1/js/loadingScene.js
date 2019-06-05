@@ -55,6 +55,7 @@ loadingScene.preload = function() {
     this.load.image('map', 'assets/images/1830 america .jpg');
     this.load.image('avatar', 'assets/images/rubber_duck.png');
     this.load.image('ball', 'assets/images/red-ball-md.png');
+    this.load.image('tearsMap', 'assets/images/tearsMap.jpg');
 
 };
 
