@@ -115,7 +115,7 @@ gameScene.create = function() {
 
 gameScene.update = function (time, delta) {
     if (player.x != destination.x) {
-    this.physics.moveToObject(player, destination, 10);
+      this.physics.moveToObject(player, destination, 10);
     }
     this.gameData.playerPosX = player.x;
     this.gameData.playerPosY = player.y;
