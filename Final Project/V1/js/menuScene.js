@@ -21,7 +21,6 @@ menuScene.preload = function() {
   playerName = this.add.text((gameWidth / 2) - 150, 300, "");
   setupKeys();
 
-
 }
 
 menuScene.create = function() {
@@ -42,6 +41,10 @@ menuScene.create = function() {
   // AFTER tribeQuestion, genderQuestion WILL RUN
 
 }
+
+menuScene.update = function (time, delta) {
+  updateName();
+};
 
 // Asking for tribe
 function tribeQuestion() {
@@ -123,6 +126,8 @@ function genderQuestion() {
   });
 
 }
+
+// Asking for name of plater
 function nameQuestion() {
 
 playerName = menuScene.add.text(gameWidth / 2 - 50, 260, "");
@@ -141,11 +146,9 @@ saveButton.on('pointerdown', function() {
 
 }
 
-menuScene.update = function (time, delta) {
-  updateName();
-};
-
+////////////////////////////////////////////////
 // Ugly functions to get user keyboard input
+////////////////////////////////////////////////
 
 function setupKeys() {
   aKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -177,6 +180,9 @@ function setupKeys() {
   deleteKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
 
 }
+
+////////////////////////////////////////////////
+
 function updateName() {
   if (updateSpeed > 7) {
     if (aKey.isDown) {
@@ -240,6 +246,8 @@ function updateName() {
   }
   updateSpeed++;
 }
+
+/////////////////////////////////////////////////
 
 // To make a sprite interactive
 function interactive(button) {
