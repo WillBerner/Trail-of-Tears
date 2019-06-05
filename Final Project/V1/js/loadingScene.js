@@ -49,21 +49,19 @@ loadingScene.preload = function() {
       this.load.image('background', 'assets/images/western-background.jpg');
     }
     this.load.image('background', 'assets/images/western-background.jpg');
-    this.load.image('title', 'assets/images/titleButton.png');
-    this.load.image('start', 'assets/images/startButton.png');
-    this.load.image('indian', 'assets/images/indian.jpeg');
+    this.load.image('title', 'assets/images/text/titleButton.png');
+    this.load.image('start', 'assets/images/text/startButton.png');
     this.load.image('menuBackground', "assets/images/menuBackground.jpg");
-    this.load.image('tribeText', 'assets/images/tribeText.png');
-    this.load.image('cherokeeText', 'assets/images/cherokeeText.png');
-    this.load.image('choctawText', 'assets/images/choctawText.png');
-    this.load.image('muskogeeText', 'assets/images/muskogeeText.png');
-
-    this.load.image('male', 'assets/images/male.png');
-    this.load.image('female', 'assets/images/female.png');
-    this.load.image('genderText', 'assets/images/genderText.png');
-    this.load.image('nonBinary', 'assets/images/nonBinary.png');
-    this.load.image('name', 'assets/images/name.png');
-    this.load.image('save', 'assets/images/save.png');
+    this.load.image('tribeText', 'assets/images/text/tribeText.png');
+    this.load.image('cherokeeText', 'assets/images/text/cherokeeText.png');
+    this.load.image('choctawText', 'assets/images/text/choctawText.png');
+    this.load.image('muskogeeText', 'assets/images/text/muskogeeText.png');
+    this.load.image('male', 'assets/images/text/male.png');
+    this.load.image('female', 'assets/images/text/female.png');
+    this.load.image('genderText', 'assets/images/text/genderText.png');
+    this.load.image('nonBinary', 'assets/images/text/nonBinary.png');
+    this.load.image('name', 'assets/images/text/name.png');
+    this.load.image('save', 'assets/images/text/save.png');
 
 
 
