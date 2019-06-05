@@ -61,10 +61,6 @@ gameScene.init = function() {
 gameScene.preload = function () {
     // log we are now in "Boot Scene"
     console.log("Loading Scene: Game");
-
-    this.load.image('map', 'assets/images/1830 america .jpg');
-    this.load.image('avatar', 'assets/images/rubber_duck.png');
-    this.load.image('ball', 'assets/images/red-ball-md.png');
 };
 
 // ass all objects active from the start in the game in create

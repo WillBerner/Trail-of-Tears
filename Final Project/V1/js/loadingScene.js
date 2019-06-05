@@ -29,14 +29,14 @@ loadingScene.preload = function() {
         loadingBar.fillRect(0, 0, value * loadingBarWidth, loadingBarHeight);
     }, this);
 
-    // LOAD ALL ASSETS HERE
-    for(let i = 0; i < 10000; i++) {
-      this.load.image('background', 'assets/images/western-background.jpg');
-    }
-    this.load.image('background', 'assets/images/western-background.jpg');
+
+////////////////////////////////////////////////////////////////
+/////// LOAD ALL ASSETS HERE ///////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+    // LOADING TEXT IMAGES
     this.load.image('title', 'assets/images/text/titleButton.png');
     this.load.image('start', 'assets/images/text/startButton.png');
-    this.load.image('menuBackground', "assets/images/menuBackground.jpg");
     this.load.image('tribeText', 'assets/images/text/tribeText.png');
     this.load.image('cherokeeText', 'assets/images/text/cherokeeText.png');
     this.load.image('choctawText', 'assets/images/text/choctawText.png');
@@ -47,6 +47,14 @@ loadingScene.preload = function() {
     this.load.image('nonBinary', 'assets/images/text/nonBinary.png');
     this.load.image('name', 'assets/images/text/name.png');
     this.load.image('save', 'assets/images/text/save.png');
+
+
+    // LOADING OTHER IMAGES
+    this.load.image('background', 'assets/images/western-background.jpg');
+    this.load.image('menuBackground', "assets/images/menuBackground.jpg");
+    this.load.image('map', 'assets/images/1830 america .jpg');
+    this.load.image('avatar', 'assets/images/rubber_duck.png');
+    this.load.image('ball', 'assets/images/red-ball-md.png');
 
 };
 
