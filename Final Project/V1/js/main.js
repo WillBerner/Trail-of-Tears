@@ -61,11 +61,14 @@ gameScene.init = function() {
 gameScene.preload = function () {
     // log we are now in "Boot Scene"
     console.log("Loading Scene: Game");
-    this.load.image('maleChar', "assets/images/indian.jpeg")
+    this.load.image('maleChar', "assets/images/indian.jpg")
+    this.load.image('maleSprite', "assets/images/maleIndian.png")
     this.load.image('map', 'assets/images/1830 america .jpg');
     this.load.image('avatar', 'assets/images/rubber_duck.png');
     this.load.image('ball', 'assets/images/red-ball-md.png');
     this.load.image('femaleChar', 'assets/images/female NA.jpg');
+    this.load.image('femaleSprite', 'assets/images/femaleIndian.png');
+
 };
 
 // ass all objects active from the start in the game in create
@@ -77,15 +80,19 @@ gameScene.create = function() {
     this.background.displayWidth = config.width;
     this.background.displayHeight = config.height;
 
-    player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'avatar')
-    player.setScale(.2);
-    player.body.allowGravity = false;
+
 
     if(character.gender == "male"){
         chief = this.add.sprite(config.width - 75, 100, 'maleChar')
+        player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'maleSprite')
+        player.setScale(.2);
+        player.body.allowGravity = false;
     }
     if (character.gender == "female") {
         chief = this.add.sprite(config.width - 75, 100, 'femaleChar')
+        player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'femaleSprite')
+        player.setScale(.2);
+        player.body.allowGravity = false;
     }
         chief.displayWidth = 150;
         chief.displayHeight = 200;
