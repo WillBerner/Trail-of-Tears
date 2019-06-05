@@ -17,8 +17,8 @@ menuScene.preload = function() {
   background.width = config.width;
   background.height = config.height;
 
+  // Setting up for user text input
   playerName = this.add.text((gameWidth / 2) - 150, 300, "");
-
   setupKeys();
 
 
@@ -124,10 +124,18 @@ function genderQuestion() {
 
 }
 function nameQuestion() {
+
 playerName = menuScene.add.text(gameWidth / 2 - 50, 260, "");
-playerName.setScale(2);
+playerName.setScale(1.8);
 nameText = menuScene.add.sprite((gameWidth / 2) - 100, 275, 'name');
 nameText.setScale(0.5);
+
+let saveButton = menuScene.add.sprite(gameWidth / 2, 400, 'save');
+interactive(saveButton);
+saveButton.on('pointerdown', function() {
+  character.name = name;
+})
+
 
 
 }

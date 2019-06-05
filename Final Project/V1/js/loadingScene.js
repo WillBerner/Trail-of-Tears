@@ -63,6 +63,9 @@ loadingScene.preload = function() {
     this.load.image('genderText', 'assets/images/genderText.png');
     this.load.image('nonBinary', 'assets/images/nonBinary.png');
     this.load.image('name', 'assets/images/name.png');
+    this.load.image('save', 'assets/images/save.png');
+
+
 
 };
 
