@@ -11,9 +11,25 @@ let config = {
   scene: [bootScene, loadingScene, homeScene, gameScene],
   title: 'Phaser3 Project',
   pixelArt: false, //Use anti-aliasing
-  backgroundColor: '#ffffff' // white background by default
+  backgroundColor: '#ffffff', // white background by default
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: { y: 200 }
+        }
+    }
 };
 
+gameScene.gameData = {
+    startX: 465,
+    startY: 430,
+    endX: 100,
+    endY: 400,
+    playerPosX: 465,
+    playerPosY: 430,
+    timeProgressed: 0,
+}
 // create the game, and pass it the configuration
 let game = new Phaser.Game(config);
 
@@ -25,6 +41,7 @@ let GAMESTATE = {
     GAMEOVER: 3
 };
 
+let day = 0;
 let character = {
     name: "",
     health: 100,
@@ -39,19 +56,70 @@ gameScene.init = function() {
     this.state = GAMESTATE.READY;
 };
 
+gameScene.preload = function () {
+    // log we are now in "Boot Scene"
+    console.log("Loading Scene: Game");
+
+    this.load.image('map', 'assets/images/1830 america .jpg');
+    this.load.image('avatar', 'assets/images/rubber_duck.png');
+    this.load.image('ball', 'assets/images/red-ball-md.png');
+};
+
 // ass all objects active from the start in the game in create
 gameScene.create = function() {
     // for now that is just the background
-    this.background = this.add.sprite(0,0,'background');
+    this.background = this.add.sprite(0,0,'map');
     this.background.setOrigin(0,0);
-    this.background.depth = -10;
-    this.background.width = config.width;
-    this.background.height = config.height;
+    this.background.depth = -10; // what is depth?
+    this.background.displayWidth = config.width;
+    this.background.displayHeight = config.height;
 
-    this.character = this.add.sprite(400, 400, 'indian');
+    player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'avatar')
+    player.setScale(.2);
+    player.body.allowGravity = false;
+    
+   
+    destination = this.add.sprite(this.gameData.endX, this.gameData.endY, 'ball')
+    destination.setScale(.03)
+
+    start = this.add.sprite(this.gameData.startX, this.gameData.startY, 'ball')
+    start.setScale(.03)
+
+    this.textContainer = gameScene.add.container(10, 0);
+    this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto' });
+    this.liveNumText = this.add.text(16, 30, 'Living: 800', { fontSize: '200px', fontStyle: 'Roboto' });
+    this.deadNumText = this.add.text(16, 30, 'Dead: 0', { fontSize: '200px', fontStyle: 'Roboto' });
+    this.rationText = this.add.text(16, 45, 'Rations: 100', { fontSize: '200px', fontStyle: 'Roboto' });
+    this.medicineText = this.add.text(16, 60, 'Medicine: 100', { fontSize: '200px', fontStyle: 'Roboto' });
+    this.waterText = this.add.text(16, 75, 'Water: 100', { fontSize: '200px', fontStyle: 'Roboto' });
+    this.textContainer.add(this.dayText);
+    this.textContainer.add(this.liveNumText);
+    this.textContainer.add(this.deadNumText);
+    this.textContainer.add(this.rationText);
+    this.textContainer.add(this.medicineText);
+    this.textContainer.add(this.waterText);
 
 
+    //trail = new Phaser.Geom.Line(this.gameData.playerPosX, this.gameData.playerPosY, start.x, start.y);
+    trail = new Phaser.Geom.Line(destination.x, destination.y, start.x, start.y);
+    graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
+    graphics.strokeLineShape(trail);
 
+    trailLength = this.gameData.startX - this.gameData.endX
+    dayLength = trailLength / 120
+
+    // this.character = this.add.sprite(400, 400, 'indian');
+};
+
+gameScene.update = function (time, delta) {
+    if (player.x != destination.x) {
+    this.physics.moveToObject(player, destination, 10);
+    }
+    this.gameData.playerPosX = player.x;
+    this.gameData.playerPosY = player.y;
+    //graphics.strokeLineShape(trail);
+    day = parseInt((start.x - player.x) / dayLength); 
+    gameScene.dayText.setText('Day: ' + day);
 
 };
 
@@ -64,4 +132,13 @@ gameScene.gameOver = function(){
             this.scene.start('Home');
         }
     }, this);
+
+trailEvent = function() {
+    this.gameData.playerPosX = player.x
+    this.gameData.playerPosY = player.y
+    this.scene.start('Trail Event')
+}
 };
+
+    // TODO: decrement water & rations everyday
+    // add background to text container
