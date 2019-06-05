@@ -134,6 +134,7 @@ let saveButton = menuScene.add.sprite(gameWidth / 2, 400, 'save');
 interactive(saveButton);
 saveButton.on('pointerdown', function() {
   character.name = name;
+  menuScene.scene.start('Game');
 })
 
 
