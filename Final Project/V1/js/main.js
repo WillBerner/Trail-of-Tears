@@ -1,5 +1,7 @@
 // this is the main game scene. Here we do most of the games logic while playing.
 
+let left = true;
+let right = false;
 // create a new scene
 let gameScene = new Phaser.Scene('Game');
 
@@ -123,7 +125,8 @@ gameScene.create = function() {
     this.medicineText = this.add.text(16, 90, 'Medicine: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.waterText = this.add.text(16, 75, 'Water: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
 
-    this.textContainer.setScale(1.5);this.textContainer.add(this.dayText);
+    this.textContainer.setScale(1.5);
+    this.textContainer.add(this.dayText);
     this.textContainer.add(this.liveNumText);
     this.textContainer.add(this.deadNumText);
     this.textContainer.add(this.rationText);
@@ -133,9 +136,6 @@ gameScene.create = function() {
     graphics.strokeLineShape(trail);
     graphics.fillRect(0, 0, 150, 200);
 
-
-    //trail = new Phaser.Geom.Line(this.gameData.playerPosX, this.gameData.playerPosY, start.x, start.y);
-
     trailLength = this.gameData.startX - this.gameData.endX;
     dayLength = trailLength / 120;
 
@@ -144,6 +144,21 @@ gameScene.create = function() {
 gameScene.update = function (time, delta) {
     if (player.x != destination.x) {
       this.physics.moveToObject(player, destination, 8);
+
+      if (left && !right) {
+        player.angle +=3;
+        if (player.angle >= 30) {
+          left = false;
+          right = true;
+        }
+      } else if (right && !left) {
+        player.angle -=3;
+        if (player.angle <= -30) {
+          left = true;
+          right = false;
+        }
+      }
+
     }
     if (this.gameData.playerPosX - player.x >= dayLength
         && character.water > 0
@@ -176,6 +191,8 @@ gameScene.gameOver = function(){
             this.scene.start('Home');
         }
     }, this);
+
+// Saving player's positional data for after event
 
 trailEvent = function() {
     this.gameData.playerPosX = player.x
