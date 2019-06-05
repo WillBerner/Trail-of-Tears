@@ -85,13 +85,13 @@ gameScene.create = function() {
     if(character.gender == "male"){
         chief = this.add.sprite(config.width - 75, 100, 'maleChar')
         player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'maleSprite')
-        player.setScale(.2);
+        player.setScale(0.1);
         player.body.allowGravity = false;
     }
     if (character.gender == "female") {
         chief = this.add.sprite(config.width - 75, 100, 'femaleChar')
         player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'femaleSprite')
-        player.setScale(.2);
+        player.setScale(0.2);
         player.body.allowGravity = false;
     }
         chief.displayWidth = 150;
@@ -108,10 +108,10 @@ gameScene.create = function() {
     trail = new Phaser.Geom.Line(destination.x, destination.y, start.x, start.y);
     //border = new Phaser.Geom.Rect(50, 50, 100, 100);
 
-    graphics = this.add.graphics({ 
+    graphics = this.add.graphics({
         lineStyle: { width: 4, color: 0xaa00aa },
         fillStyle: { color: 0xaa00aa, alpha: 1.0},
-        //fillRect: {x: border.x, y: border.y, width: border.width, height: border.height} 
+        //fillRect: {x: border.x, y: border.y, width: border.width, height: border.height}
     });
 
 
@@ -143,9 +143,9 @@ gameScene.create = function() {
 
 gameScene.update = function (time, delta) {
     if (player.x != destination.x) {
-      this.physics.moveToObject(player, destination, 10);
+      this.physics.moveToObject(player, destination, 8);
     }
-    if (this.gameData.playerPosX - player.x >= dayLength 
+    if (this.gameData.playerPosX - player.x >= dayLength
         && character.water > 0
         && character.rations > 0){
         this.gameData.playerPosX = player.x;
@@ -159,9 +159,12 @@ gameScene.update = function (time, delta) {
 
     //graphics.strokeLineShape(trail);
     day = parseInt((start.x - player.x) / dayLength);
-    
+    if (day > 118) {
+      day = 120;
+    }
+
     gameScene.dayText.setText('Day: ' + day);
-    
+
 };
 
 gameScene.gameOver = function(){
@@ -180,5 +183,3 @@ trailEvent = function() {
     this.scene.start('Trail Event')
 }
 };
-
-
