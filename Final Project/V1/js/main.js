@@ -79,8 +79,8 @@ gameScene.create = function() {
     player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'avatar')
     player.setScale(.2);
     player.body.allowGravity = false;
-    
-   
+
+
     destination = this.add.sprite(this.gameData.endX, this.gameData.endY, 'ball')
     destination.setScale(.03)
 
@@ -88,13 +88,14 @@ gameScene.create = function() {
     start.setScale(.03)
 
     this.textContainer = gameScene.add.container(10, 0);
-    this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto' });
-    this.liveNumText = this.add.text(16, 30, 'Living: 800', { fontSize: '200px', fontStyle: 'Roboto' });
-    this.deadNumText = this.add.text(16, 30, 'Dead: 0', { fontSize: '200px', fontStyle: 'Roboto' });
-    this.rationText = this.add.text(16, 45, 'Rations: 100', { fontSize: '200px', fontStyle: 'Roboto' });
-    this.medicineText = this.add.text(16, 60, 'Medicine: 100', { fontSize: '200px', fontStyle: 'Roboto' });
-    this.waterText = this.add.text(16, 75, 'Water: 100', { fontSize: '200px', fontStyle: 'Roboto' });
-    this.textContainer.add(this.dayText);
+    this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.liveNumText = this.add.text(16, 30, 'Living: 800', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.deadNumText = this.add.text(16, 45, 'Dead: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.rationText = this.add.text(16, 60, 'Rations: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.medicineText = this.add.text(16, 90, 'Medicine: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.waterText = this.add.text(16, 75, 'Water: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+
+    this.textContainer.setScale(1.5);this.textContainer.add(this.dayText);
     this.textContainer.add(this.liveNumText);
     this.textContainer.add(this.deadNumText);
     this.textContainer.add(this.rationText);
@@ -107,10 +108,9 @@ gameScene.create = function() {
     graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
     graphics.strokeLineShape(trail);
 
-    trailLength = this.gameData.startX - this.gameData.endX
-    dayLength = trailLength / 120
+    trailLength = this.gameData.startX - this.gameData.endX;
+    dayLength = trailLength / 120;
 
-    // this.character = this.add.sprite(400, 400, 'indian');
 };
 
 gameScene.update = function (time, delta) {
@@ -120,7 +120,7 @@ gameScene.update = function (time, delta) {
     this.gameData.playerPosX = player.x;
     this.gameData.playerPosY = player.y;
     //graphics.strokeLineShape(trail);
-    day = parseInt((start.x - player.x) / dayLength); 
+    day = parseInt((start.x - player.x) / dayLength);
     gameScene.dayText.setText('Day: ' + day);
 
 };
