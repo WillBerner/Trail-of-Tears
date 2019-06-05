@@ -35,6 +35,7 @@ let someChoices2 = {
 }
 chance();
 let result2 = (chanceValue < 80 ? "You follow the tracks to find a rabbit not too far along, enough to feed you for a day or two." : "You try to find the rabbit but are unsuccessful");
+let secondEvent = new Event(description2, q2, someChoices2, result2);
 
 /////////////////////////////////////////////////////////////////////
 

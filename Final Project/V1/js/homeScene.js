@@ -18,6 +18,7 @@ homeScene.create = function() {
     // Creating title and start button
     let logo = this.add.sprite(400, 100, 'title');
     let startButton = this.add.sprite(400, 500, 'start');
+    let map = this.add.sprite(gameWidth / 2, gameHeight / 2, 'tearsMap');
 
     startButton.setOrigin(0.5, 0.5);
     startButton.depth = 10;
