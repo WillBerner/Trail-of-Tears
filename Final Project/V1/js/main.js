@@ -46,7 +46,7 @@ let character = {
     name: "",
     health: 100,
     water: 100,
-    food: 100,
+    rations: 100,
     tribe: "",
     gender:""
 }
@@ -61,6 +61,11 @@ gameScene.init = function() {
 gameScene.preload = function () {
     // log we are now in "Boot Scene"
     console.log("Loading Scene: Game");
+    this.load.image('maleChar', "assets/images/indian.jpeg")
+    this.load.image('map', 'assets/images/1830 america .jpg');
+    this.load.image('avatar', 'assets/images/rubber_duck.png');
+    this.load.image('ball', 'assets/images/red-ball-md.png');
+    this.load.image('femaleChar', 'assets/images/female NA.jpg');
 };
 
 // ass all objects active from the start in the game in create
@@ -76,12 +81,32 @@ gameScene.create = function() {
     player.setScale(.2);
     player.body.allowGravity = false;
 
+    if(character.gender == "male"){
+        chief = this.add.sprite(config.width - 75, 100, 'maleChar')
+    }
+    if (character.gender == "female") {
+        chief = this.add.sprite(config.width - 75, 100, 'femaleChar')
+    }
+        chief.displayWidth = 150;
+        chief.displayHeight = 200;
+
+
 
     destination = this.add.sprite(this.gameData.endX, this.gameData.endY, 'ball')
     destination.setScale(.03)
 
     start = this.add.sprite(this.gameData.startX, this.gameData.startY, 'ball')
     start.setScale(.03)
+
+    trail = new Phaser.Geom.Line(destination.x, destination.y, start.x, start.y);
+    //border = new Phaser.Geom.Rect(50, 50, 100, 100);
+
+    graphics = this.add.graphics({ 
+        lineStyle: { width: 4, color: 0xaa00aa },
+        fillStyle: { color: 0xaa00aa, alpha: 1.0},
+        //fillRect: {x: border.x, y: border.y, width: border.width, height: border.height} 
+    });
+
 
     this.textContainer = gameScene.add.container(10, 0);
     this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
@@ -98,11 +123,11 @@ gameScene.create = function() {
     this.textContainer.add(this.medicineText);
     this.textContainer.add(this.waterText);
 
+    graphics.strokeLineShape(trail);
+    graphics.fillRect(0, 0, 150, 200);
+
 
     //trail = new Phaser.Geom.Line(this.gameData.playerPosX, this.gameData.playerPosY, start.x, start.y);
-    trail = new Phaser.Geom.Line(destination.x, destination.y, start.x, start.y);
-    graphics = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
-    graphics.strokeLineShape(trail);
 
     trailLength = this.gameData.startX - this.gameData.endX;
     dayLength = trailLength / 120;
@@ -113,12 +138,23 @@ gameScene.update = function (time, delta) {
     if (player.x != destination.x) {
       this.physics.moveToObject(player, destination, 10);
     }
-    this.gameData.playerPosX = player.x;
-    this.gameData.playerPosY = player.y;
+    if (this.gameData.playerPosX - player.x >= dayLength 
+        && character.water > 0
+        && character.rations > 0){
+        this.gameData.playerPosX = player.x;
+        this.gameData.playerPosY = player.y;
+        character.rations -= 1
+        character.water -= 1
+        gameScene.rationText.setText('Rations: ' + character.rations);
+        gameScene.waterText.setText('Water: ' + character.water);
+    }
+
+
     //graphics.strokeLineShape(trail);
     day = parseInt((start.x - player.x) / dayLength);
+    
     gameScene.dayText.setText('Day: ' + day);
-
+    
 };
 
 gameScene.gameOver = function(){
@@ -138,5 +174,4 @@ trailEvent = function() {
 }
 };
 
-    // TODO: decrement water & rations everyday
-    // add background to text container
+
