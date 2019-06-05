@@ -146,14 +146,14 @@ gameScene.update = function (time, delta) {
       this.physics.moveToObject(player, destination, 8);
 
       if (left && !right) {
-        player.angle +=3;
-        if (player.angle >= 30) {
+        player.angle +=2;
+        if (player.angle >= 20) {
           left = false;
           right = true;
         }
       } else if (right && !left) {
-        player.angle -=3;
-        if (player.angle <= -30) {
+        player.angle -=2;
+        if (player.angle <= -20) {
           left = true;
           right = false;
         }
