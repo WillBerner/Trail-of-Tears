@@ -217,10 +217,9 @@ gameScene.gameOver = function(){
 
 // SAVING PLAYER POSITIONAL DATA (USED?)
 trailEvent = function() {
-    this.gameData.playerPosX = player.x
-    this.gameData.playerPosY = player.y
-    this.scene.start('Trail Event')
-}
+    this.gameData.playerPosX = player.x;
+    this.gameData.playerPosY = player.y;
+    this.scene.start('Trail Event');
 };
 
 // UPDATE VISUALS WITH NEW VALUES
