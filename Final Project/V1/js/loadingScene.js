@@ -43,8 +43,8 @@ loadingScene.preload = function() {
     this.load.image('muskogeeText', 'assets/images/text/muskogeeText.png');
     this.load.image('male', 'assets/images/text/male.png');
     this.load.image('female', 'assets/images/text/female.png');
-    this.load.image('genderText', 'assets/images/text/genderText.png');
     this.load.image('nonBinary', 'assets/images/text/nonBinary.png');
+    this.load.image('genderText', 'assets/images/text/genderText.png');
     this.load.image('name', 'assets/images/text/name.png');
     this.load.image('save', 'assets/images/text/save.png');
 
@@ -60,6 +60,8 @@ loadingScene.preload = function() {
     this.load.image('maleSprite', "assets/images/maleIndian.png");
     this.load.image('femaleChar', 'assets/images/female NA.jpg');
     this.load.image('femaleSprite', 'assets/images/femaleIndian.png');
+    this.load.image('nonBinaryChar', 'assets/images/nonBinaryChar.png');
+    this.load.image('nonBinarySprite', 'assets/images/nonBinarySprite.png');
     this.load.image('textBox', 'assets/images/textBox.png');
 
 };

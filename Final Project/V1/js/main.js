@@ -91,6 +91,14 @@ gameScene.create = function() {
         player.setScale(0.1);
         player.body.allowGravity = false;
     }
+    if (character.gender == 'non-Binary') {
+        chief = this.add.sprite(config.width - 75, 100, 'nonBinaryChar')
+        player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'nonBinarySprite')
+        player.setScale(0.1);
+        player.body.allowGravity = false;
+        chief.displayWidth = 150;
+        chief.displayHeight = 200;
+    }
         chief.displayWidth = 150;
         chief.displayHeight = 200;
 
