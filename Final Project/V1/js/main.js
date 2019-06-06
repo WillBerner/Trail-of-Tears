@@ -31,7 +31,7 @@ gameScene.gameData = {
     endX: 100,
     endY: 400,
     playerPosX: 465,
-    playerPosY: 430,
+    playerPosY: 400,
     timeProgressed: 0,
 }
 // create the game, and pass it the configuration
@@ -48,7 +48,7 @@ let GAMESTATE = {
 let day = 0;
 let character = {
     name: "",
-    health: 100,
+    medicine: 100,
     water: 100,
     rations: 100,
     tribe: "",
@@ -70,30 +70,27 @@ gameScene.preload = function () {
 
 };
 
-// ass all objects active from the start in the game in create
 gameScene.create = function() {
-    // for now that is just the background
+
+    // SETTING UP BACKGROUND
     this.background = this.add.sprite(0,0,'map');
     this.background.setOrigin(0,0);
     this.background.depth = -10; // what is depth?
     this.background.displayWidth = config.width;
     this.background.displayHeight = config.height;
 
-
-
+    // CREATING PLAYER SPRITES
     if(character.gender == "male"){
         chief = this.add.sprite(config.width - 75, 100, 'maleChar')
         player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'maleSprite')
         player.setScale(0.1);
         player.body.allowGravity = false;
-    }
-    if (character.gender == "female") {
+    } else if (character.gender == "female") {
         chief = this.add.sprite(config.width - 75, 100, 'femaleChar')
         player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'femaleSprite')
         player.setScale(0.1);
         player.body.allowGravity = false;
-    }
-    if (character.gender == 'non-Binary') {
+    } else if (character.gender == 'non-Binary') {
         chief = this.add.sprite(config.width - 75, 100, 'nonBinaryChar')
         player = this.physics.add.sprite(this.gameData.playerPosX, this.gameData.playerPosY, 'nonBinarySprite')
         player.setScale(0.1);
@@ -105,23 +102,19 @@ gameScene.create = function() {
         chief.displayHeight = 200;
 
 
-
+    // TRAIL VISUAL SETUP
     destination = this.add.sprite(this.gameData.endX, this.gameData.endY, 'ball')
     destination.setScale(.03)
-
     start = this.add.sprite(this.gameData.startX, this.gameData.startY, 'ball')
     start.setScale(.03)
-
     trail = new Phaser.Geom.Line(destination.x, destination.y, start.x, start.y);
-    //border = new Phaser.Geom.Rect(50, 50, 100, 100);
-
     graphics = this.add.graphics({
         lineStyle: { width: 4, color: 0x89d3ff },
         fillStyle: { color: 0x89d3ff, alpha: 1.0},
-        //fillRect: {x: border.x, y: border.y, width: border.width, height: border.height}
     });
 
 
+    // SETTING UP STATS VISUALIZATION
     this.textContainer = gameScene.add.container(10, 0);
     this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.liveNumText = this.add.text(16, 30, 'Living: ' + character.living, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
@@ -137,7 +130,6 @@ gameScene.create = function() {
     this.textContainer.add(this.rationText);
     this.textContainer.add(this.medicineText);
     this.textContainer.add(this.waterText);
-
     graphics.strokeLineShape(trail);
     graphics.fillRect(0, 0, 150, 200);
 
@@ -191,6 +183,9 @@ gameScene.update = function (time, delta) {
     if (Phaser.Math.Between(1,1000) < 30) {
       character.dead++;
       character.living--;
+    } else if (character.rations < 1 && Phaser.Math.Between(1,100) < 30) {
+      character.living--;
+      character.dead++;
     }
 
     // CREATE QUASI-RANDOM EVENTS
@@ -198,6 +193,7 @@ gameScene.update = function (time, delta) {
       randomEvent();
       GAMESTATE = 2;
     }
+    updateStats();
   }
 };
 
@@ -221,10 +217,14 @@ trailEvent = function() {
 };
 
 function updateStats() {
+  if (character.rations <= 0) {
+    character.rations = 0;
+  }
   gameScene.rationText.setText('Rations: ' + character.rations);
   gameScene.waterText.setText('Water: ' + character.water);
   gameScene.liveNumText.setText('Living: ' + character.living);
   gameScene.deadNumText.setText('Dead: ' + character.dead);
+  gameScene.medicineText.setText('Medicine: ' + character.medicine);
 }
 
 function randomEvent() {

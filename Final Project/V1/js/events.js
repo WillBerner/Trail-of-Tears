@@ -21,6 +21,7 @@ let someChoices1 = {
     if (result === this.choice1) {
       character.rations -= 5;
       character.living -= 40;
+      character.medicine -=20;
     } else {
       character.rations += 20;
       character.medicine += 10;
