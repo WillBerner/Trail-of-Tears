@@ -189,7 +189,7 @@ gameScene.update = function (time, delta) {
     }
 
     // CREATE QUASI-RANDOM EVENTS
-    if (Phaser.Math.Between(1, 3000) < 20) {
+    if (Phaser.Math.Between(1, 3000) < 20 && day > 10) {
       randomEvent();
       GAMESTATE = 2;
     }
@@ -229,7 +229,7 @@ function updateStats() {
 
 function randomEvent() {
   let eventIndex = Phaser.Math.Between(0, 2);
-  eventIndex = Math.round(eventIndex);
+  eventIndex = Math.floor(eventIndex);
   let currentEvent = events[eventIndex];
   currentEvent = events[eventIndex];
 
