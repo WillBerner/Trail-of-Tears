@@ -228,7 +228,7 @@ function randomEvent() {
 
   let description = currentEvent.description;
   let question = currentEvent.question;
-  mostRecentResult = currentEvent.results;
+
   let choices = currentEvent.choices;
   let box = gameScene.add.sprite((gameWidth / 2), (gameHeight / 3) - 50, 'textBox');
   box.setScale(0.7);
@@ -240,38 +240,43 @@ function randomEvent() {
   let choice2Text = gameScene.add.text(215, 285, choices.choice2, {color:'black'})
   textInteractive(choice1Text);
   textInteractive(choice2Text);
+  let toDestroy = [box, descriptionText, questionText, choice1Text, choice2Text ];
+
+  // DISPLAY TEXTUAL RESULT OF CHOICE AND CALCULATE RESULT
   choice1Text.on('pointerdown', function() {
-    let resultText = gameScene.add.text(215, 330, mostRecentResult, {color:'black'});
-    let okButton = gameScene.add.text(gameWidth / 2, 375, "OK", {color:'black'});
-    textInteractive(okButton);
-    okButton.on('pointerdown', function() {
-      box.destroy();
-      descriptionText.destroy();
-      questionText.destroy();
-      choice1Text.destroy();
-      choice2Text.destroy();
-      resultText.destroy();
-      okButton.destroy();
-      GAMESTATE = 1;
-    });
+    mostRecentResult = choices.result1;
+    choices.calculate(choices.choice1);
+    setUpChoices(choice1Text, toDestroy);
+    gameScene.rationText.setText('Rations: ' + character.rations);
+    gameScene.waterText.setText('Water: ' + character.water);
   });
   choice2Text.on('pointerdown', function() {
-    let resultText = gameScene.add.text(215, 330, mostRecentResult, {color:'black'});
-    let okButton = gameScene.add.text(gameWidth / 2, 375, "OK", {color:'black'});
-    textInteractive(okButton);
-    okButton.on('pointerdown', function() {
-      box.destroy();
-      descriptionText.destroy();
-      questionText.destroy();
-      choice1Text.destroy();
-      choice2Text.destroy();
-      resultText.destroy();
-      okButton.destroy();
-      GAMESTATE = 1;
-    });
+    mostRecentResult = choices.result2;
+    choices.calculate(choices.choice2);
+    setUpChoices(choice2Text, toDestroy);
+    gameScene.rationText.setText('Rations: ' + character.rations);
+    gameScene.waterText.setText('Water: ' + character.water);
   });
 
+}
 
+function setUpChoices(choice, toDelete) {
+  let resultText = gameScene.add.text(215, 330, mostRecentResult, {color:'black'});
+  let okButton = gameScene.add.text(gameWidth / 2, 375, "OK", {color:'black'});
+  textInteractive(okButton);
+  toDelete[toDelete.length] = resultText;
+  toDelete[toDelete.length] = okButton;
+  okButton.on('pointerdown', function() {
+    GAMESTATE = 1;
+    deleteItems(toDelete);
+  });
+}
+
+// TO DELETE AN ARRAY OF ITEMS
+function deleteItems(items) {
+  for (let i = 0; i < items.length; i++) {
+    items[i].destroy();
+  }
 }
 
 // TO SET CHOICES TO HAVE INTERACTIVE BUTTONS

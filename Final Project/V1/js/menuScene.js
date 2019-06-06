@@ -261,10 +261,7 @@ function interactive(button) {
       scaleY: 0.8,
       duration: 200,
       yoyo: true,
-      ease: 'Quad.easeIn',
-      // onStart: function(){
-      //   button.setScale(0.8, 0.8);
-      // }
+      ease: 'Quad.easeIn'
     });
   });
 
@@ -275,10 +272,7 @@ function interactive(button) {
       scaleY: 0.5,
       duration: 200,
       yoyo: true,
-      ease: 'Quad.easeIn',
-      // onStart: function(){
-      //   button.setScale(0.5, 0.5);
-      // }
+      ease: 'Quad.easeIn'
     });
   });
 }
