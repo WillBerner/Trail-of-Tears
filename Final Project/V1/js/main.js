@@ -186,15 +186,16 @@ gameScene.update = function (time, delta) {
     gameScene.dayText.setText('Day: ' + day);
 
     // KILL OFF RANDOM PEOPLE EVERY SO OFTEN
-    if (Phaser.Math.Between(1,1000) < 10) {
+    if (Phaser.Math.Between(1,1000) < 30) {
       character.dead++;
       character.living--;
     }
 
     // CREATE QUASI-RANDOM EVENTS
-    if (Phaser.Math.Between(1,10000) < 50) {
+    if (Phaser.Math.Between(1, 3000) < 10 && !(day === lastDay)) {
       randomEvent();
       GAMESTATE = 2;
+      lastDay = day;
     }
   }
 
