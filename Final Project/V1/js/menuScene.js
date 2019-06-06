@@ -23,6 +23,8 @@ menuScene.preload = function() {
 
 }
 
+////////////////////////////////////////////////
+
 menuScene.create = function() {
 
   // Storing the width and height for easy access
@@ -41,6 +43,8 @@ menuScene.create = function() {
   // AFTER tribeQuestion, genderQuestion WILL RUN
 
 }
+
+////////////////////////////////////////////////
 
 menuScene.update = function (time, delta) {
   updateName();
@@ -88,6 +92,8 @@ function tribeQuestion() {
 
 }
 
+////////////////////////////////////////////////
+
 // Asking for gender of player
 function genderQuestion() {
   let genderText = menuScene.add.sprite(gameWidth / 2, 220, 'genderText');
@@ -126,6 +132,8 @@ function genderQuestion() {
   });
 
 }
+
+////////////////////////////////////////////////
 
 // Asking for name of plater
 function nameQuestion() {
@@ -178,13 +186,14 @@ function setupKeys() {
   yKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y);
   zKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
   deleteKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
+  enterKey = menuScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
 }
 
 ////////////////////////////////////////////////
 
 function updateName() {
-  if (updateSpeed > 7) {
+  if (updateSpeed > 6) {
     if (aKey.isDown) {
       name += "A";
     } else if (bKey.isDown) {
@@ -239,6 +248,8 @@ function updateName() {
       name += "Z";
     } else if (deleteKey.isDown) {
       name = name.substring(0, name.length - 1)
+    } else if (enterKey.isDown) {
+      menuScene.scene.start('Game');
     }
     updateSpeed = 0;
 

@@ -1,13 +1,14 @@
-// this is the main game scene. Here we do most of the games logic while playing.
-
+// GLOBAL VARIABLES
 let left = true;
 let right = false;
 let lastDay = 0;
 let mostRecentResult = "";
-// create a new scene
+let day = 0;
+
+// CREATING GAME SCENE
 let gameScene = new Phaser.Scene('Game');
 
-// our game's configuration
+// GAME CONFIGURATION
 let config = {
   type: Phaser.AUTO,
   width: 800,
@@ -25,6 +26,7 @@ let config = {
     }
 };
 
+// GAME DATA FOR TRACKING GAME STATE
 gameScene.gameData = {
     startX: 465,
     startY: 430,
@@ -34,10 +36,11 @@ gameScene.gameData = {
     playerPosY: 400,
     timeProgressed: 0,
 }
-// create the game, and pass it the configuration
+
+// CREATE GAME USING CONFIG
 let game = new Phaser.Game(config);
 
-// a simple set of states that the game can assume.
+// USED TO PAUSE FOR RANDOM EVENTS
 let GAMESTATE = {
     MENU: 0,
     READY: 1,
@@ -45,7 +48,7 @@ let GAMESTATE = {
     GAMEOVER: 3
 };
 
-let day = 0;
+// PLAYER INFORMATION
 let character = {
     name: "",
     medicine: 100,
@@ -57,19 +60,16 @@ let character = {
     dead: 0
 }
 
-// some parameters for our scene
+// START GAME
 gameScene.init = function() {
-    // log we are now in "Game Scene"
     console.log("Started Scene: Game");
+};
+gameScene.preload = function () {
+    console.log("Loading Scene: Game");
     this.state = GAMESTATE.READY;
 };
 
-gameScene.preload = function () {
-    // log we are now in "Boot Scene"
-    console.log("Loading Scene: Game");
-
-};
-
+// SETUP SCREEN
 gameScene.create = function() {
 
     // SETTING UP BACKGROUND
@@ -133,15 +133,19 @@ gameScene.create = function() {
     graphics.strokeLineShape(trail);
     graphics.fillRect(0, 0, 150, 200);
 
+    // CALCULATE DAY LENGTH BASED ON DISTANCE
     trailLength = this.gameData.startX - this.gameData.endX;
     dayLength = trailLength / 120;
 
 };
 
+// UPDATE PLAYER POSITION, STATS, DAY, ETC
 gameScene.update = function (time, delta) {
   if ((GAMESTATE === 2)) {
+    // GAME PAUSED
     this.physics.moveToObject(player, destination, 0);
   } else {
+    // GAME RUNNING
     if (player.x != destination.x) {
       this.physics.moveToObject(player, destination, 8);
 
@@ -161,7 +165,7 @@ gameScene.update = function (time, delta) {
       }
     }
 
-    // MAKING PLAYER MOVE
+    // MAKING PLAYER SPRITE MOVE
     if (this.gameData.playerPosX - player.x >= dayLength
         && character.water > 0
         && character.rations > 0){
@@ -193,10 +197,13 @@ gameScene.update = function (time, delta) {
       randomEvent();
       GAMESTATE = 2;
     }
+
+    // UPDATE PLAYER STATS VISUALIZATION
     updateStats();
   }
 };
 
+// NOT USED (YET)...
 gameScene.gameOver = function(){
     this.state = GAMESTATE.GAMEOVER;
     this.time.addEvent({
@@ -206,9 +213,9 @@ gameScene.gameOver = function(){
             this.scene.start('Home');
         }
     }, this);
+};
 
-// Saving player's positional data for after event
-
+// SAVING PLAYER POSITIONAL DATA (USED?)
 trailEvent = function() {
     this.gameData.playerPosX = player.x
     this.gameData.playerPosY = player.y
@@ -216,6 +223,7 @@ trailEvent = function() {
 }
 };
 
+// UPDATE VISUALS WITH NEW VALUES
 function updateStats() {
   if (character.rations <= 0) {
     character.rations = 0;
@@ -227,22 +235,25 @@ function updateStats() {
   gameScene.medicineText.setText('Medicine: ' + character.medicine);
 }
 
+// LOAD AND SHOW A RANDOM EVENT FROM EVENTS FILE
 function randomEvent() {
+
+  // GET RANDOM EVENT OBJECT
   let eventIndex = Phaser.Math.Between(0, 2);
   eventIndex = Math.floor(eventIndex);
   let currentEvent = events[eventIndex];
   currentEvent = events[eventIndex];
 
+  // GET EVENT'S PROPERTIES
   let description = currentEvent.description;
   let question = currentEvent.question;
-
   let choices = currentEvent.choices;
+
+  // SHOW EVENT AND CHOICES TO PLAYER
   let box = gameScene.add.sprite((gameWidth / 2), (gameHeight / 3) - 50, 'textBox');
   box.setScale(0.7);
-
   let descriptionText = gameScene.add.text(210, 150, description, {color: 'black'});
   let questionText = gameScene.add.text(210, 230, question, {color: 'black'});
-
   let choice1Text = gameScene.add.text(215, 265, choices.choice1, {color:'black'})
   let choice2Text = gameScene.add.text(215, 285, choices.choice2, {color:'black'})
   textInteractive(choice1Text);
@@ -265,6 +276,7 @@ function randomEvent() {
 
 }
 
+// DISPLAYS CHOICES OF AN EVENT AND RESUME WHEN DONE
 function setUpChoices(choice, toDelete) {
   let resultText = gameScene.add.text(215, 330, mostRecentResult, {color:'black'});
   let okButton = gameScene.add.text(gameWidth / 2, 375, "OK", {color:'black'});
@@ -277,7 +289,7 @@ function setUpChoices(choice, toDelete) {
   });
 }
 
-// TO DELETE AN ARRAY OF ITEMS
+// TO DELETE AN ARRAY OF TEXT/SPRITE ITEMS
 function deleteItems(items) {
   for (let i = 0; i < items.length; i++) {
     items[i].destroy();
