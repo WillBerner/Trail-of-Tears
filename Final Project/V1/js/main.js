@@ -52,7 +52,9 @@ let character = {
     water: 100,
     rations: 100,
     tribe: "",
-    gender:""
+    gender:"",
+    living: 800,
+    dead: 0
 }
 
 // some parameters for our scene
@@ -122,8 +124,8 @@ gameScene.create = function() {
 
     this.textContainer = gameScene.add.container(10, 0);
     this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
-    this.liveNumText = this.add.text(16, 30, 'Living: 800', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
-    this.deadNumText = this.add.text(16, 45, 'Dead: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.liveNumText = this.add.text(16, 30, 'Living: ' + character.living, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.deadNumText = this.add.text(16, 45, 'Dead: ' + character.dead, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.rationText = this.add.text(16, 60, 'Rations: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.medicineText = this.add.text(16, 90, 'Medicine: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.waterText = this.add.text(16, 75, 'Water: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
@@ -173,14 +175,19 @@ gameScene.update = function (time, delta) {
         this.gameData.playerPosY = player.y;
         character.rations -= 1
         character.water -= 1
-        gameScene.rationText.setText('Rations: ' + character.rations);
-        gameScene.waterText.setText('Water: ' + character.water);
-    }
+        updateStats();
+        }
 
     // CHANGING DAY
     day = parseInt((start.x - player.x) / dayLength);
     if (day > 118) {
       day = 120;
+    }
+
+    // KILL OFF RANDOM PEOPLE EVERY SO OFTEN
+    if (Phaser.Math.Between(1,1000) < 10) {
+      character.dead++;
+      character.living--;
     }
 
     // CREATE QUASI-RANDOM EVENTS
@@ -189,6 +196,7 @@ gameScene.update = function (time, delta) {
       lastDay = day;
       GAMESTATE = 2;
     }
+
     gameScene.dayText.setText('Day: ' + day);
   }
 
@@ -221,10 +229,18 @@ trailEvent = function() {
 }
 };
 
+function updateStats() {
+  gameScene.rationText.setText('Rations: ' + character.rations);
+  gameScene.waterText.setText('Water: ' + character.water);
+  gameScene.liveNumText.setText('Living: ' + character.living);
+  gameScene.deadNumText.setText('Dead: ' + character.dead);
+}
+
 function randomEvent() {
   let eventIndex = Phaser.Math.Between(0, 2);
   eventIndex = Math.round(eventIndex);
   let currentEvent = events[eventIndex];
+  currentEvent = events[3];
 
   let description = currentEvent.description;
   let question = currentEvent.question;
@@ -247,16 +263,14 @@ function randomEvent() {
     mostRecentResult = choices.result1;
     choices.calculate(choices.choice1);
     setUpChoices(choice1Text, toDestroy);
-    gameScene.rationText.setText('Rations: ' + character.rations);
-    gameScene.waterText.setText('Water: ' + character.water);
+    updateStats();
   });
   choice2Text.on('pointerdown', function() {
     mostRecentResult = choices.result2;
     choices.calculate(choices.choice2);
     setUpChoices(choice2Text, toDestroy);
-    gameScene.rationText.setText('Rations: ' + character.rations);
-    gameScene.waterText.setText('Water: ' + character.water);
-  });
+    updateStats();
+    });
 
 }
 

@@ -10,7 +10,7 @@ class Event {
 ////////////////// CREATING EVENTS ///////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-let description1 = "You wake up to screams of your village\nbeing burned...";
+let description1 = "You wake up to screams of your campsite\nbeing burned...";
 let q1 = "Do you decide to try to \ntake anything or just leave?";
 let someChoices1 = {
   choice1: "Get out while you still can",
@@ -19,7 +19,8 @@ let someChoices1 = {
   result2: "You luckily get out with a few belongings\n and rations for the journey ahead.",
   calculate: function(result) {
     if (result === this.choice1) {
-      character.rations -= 5
+      character.rations -= 5;
+      character.living -= 40;
     } else {
       character.rations += 20;
       character.medicine += 10;
@@ -64,10 +65,29 @@ let someChoices3 = {
 }
 let event3 = new Event(description3, q3, someChoices3);
 
+/////////////////////////////////////////////////////////////////////
+
+let description4 = "You find a destroyed wagon on the side\n of the road.";
+let q4 = "Will you search the wagon for supplies?";
+let someChoices4 = {
+  choice1: "No, it looked like they were attacked",
+  choice2: "The people need medicine",
+  result1: "You quickly leave the area.",
+  result2: "Your group is attacked by bandits\nand many are killed",
+  calculate: function(result) {
+    if (result === this.choice2) {
+      character.rations -= 5;
+      character.living -= 50;
+      character.dead += 50;
+    }
+  }
+}
+let event4 = new Event(description4, q4, someChoices4);
+
 
 ////////////////////////////////////////////////////////////
 ////////////////// MAKE SURE TO ////////////////////////////
 /////////// ADD ALL EVENTS TO THE EVENTS ARRAY!! ///////////
 ////////////////////////////////////////////////////////////
 
-let events = [event1, event2, event3];
+let events = [event1, event2, event3, event4];
