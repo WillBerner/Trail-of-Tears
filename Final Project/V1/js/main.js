@@ -147,7 +147,9 @@ gameScene.create = function() {
 };
 
 gameScene.update = function (time, delta) {
-  if (!(GAMESTATE === 2)) {
+  if ((GAMESTATE === 2)) {
+    this.physics.moveToObject(player, destination, 0);
+  } else {
     if (player.x != destination.x) {
       this.physics.moveToObject(player, destination, 8);
 
@@ -192,21 +194,11 @@ gameScene.update = function (time, delta) {
     }
 
     // CREATE QUASI-RANDOM EVENTS
-    if (Phaser.Math.Between(1, 3000) < 10 && !(day === lastDay)) {
+    if (Phaser.Math.Between(1, 3000) < 20) {
       randomEvent();
       GAMESTATE = 2;
-      lastDay = day;
     }
   }
-
-  /////////// HACKY /////////////
-  //// IF THE GAME IS PAUSED ////
-  //// DON'T MOVE ANYWHERE /////
-  //////////////////////////////
-  else {
-    this.physics.moveToObject(player, destination, 0);
-  }
-
 };
 
 gameScene.gameOver = function(){
@@ -239,7 +231,7 @@ function randomEvent() {
   let eventIndex = Phaser.Math.Between(0, 2);
   eventIndex = Math.round(eventIndex);
   let currentEvent = events[eventIndex];
-  currentEvent = events[3];
+  currentEvent = events[eventIndex];
 
   let description = currentEvent.description;
   let question = currentEvent.question;
