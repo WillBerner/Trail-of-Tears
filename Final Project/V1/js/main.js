@@ -183,6 +183,7 @@ gameScene.update = function (time, delta) {
     if (day > 118) {
       day = 120;
     }
+    gameScene.dayText.setText('Day: ' + day);
 
     // KILL OFF RANDOM PEOPLE EVERY SO OFTEN
     if (Phaser.Math.Between(1,1000) < 10) {
@@ -191,13 +192,10 @@ gameScene.update = function (time, delta) {
     }
 
     // CREATE QUASI-RANDOM EVENTS
-    if (day % 10 === 0 && !(lastDay === day)) {
+    if (Phaser.Math.Between(1,10000) < 50) {
       randomEvent();
-      lastDay = day;
       GAMESTATE = 2;
     }
-
-    gameScene.dayText.setText('Day: ' + day);
   }
 
   /////////// HACKY /////////////
