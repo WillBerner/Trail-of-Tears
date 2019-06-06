@@ -3,6 +3,7 @@
 let left = true;
 let right = false;
 let lastDay = 0;
+let mostRecentResult = "";
 // create a new scene
 let gameScene = new Phaser.Scene('Game');
 
@@ -18,7 +19,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            debug: false,
             gravity: { y: 200 }
         }
     }
@@ -136,9 +137,9 @@ gameScene.create = function() {
 };
 
 gameScene.update = function (time, delta) {
+  if (!(GAMESTATE === 2)) {
     if (player.x != destination.x) {
       this.physics.moveToObject(player, destination, 8);
-
 
       // MAKING CHARACTER "WALK"
       if (left && !right) {
@@ -178,11 +179,18 @@ gameScene.update = function (time, delta) {
     if (day % 10 === 0 && !(lastDay === day)) {
       randomEvent();
       lastDay = day;
+      GAMESTATE = 2;
     }
-
-
-
     gameScene.dayText.setText('Day: ' + day);
+  }
+
+  /////////// HACKY /////////////
+  //// IF THE GAME IS PAUSED ////
+  //// DON'T MOVE ANYWHERE /////
+  //////////////////////////////
+  else {
+    this.physics.moveToObject(player, destination, 0);
+  }
 
 };
 
@@ -206,8 +214,84 @@ trailEvent = function() {
 };
 
 function randomEvent() {
-  let eventIndex = Phaser.Math.Between(0, 3);
+  let eventIndex = Phaser.Math.Between(0, 2);
+  eventIndex = Math.round(eventIndex);
+  let currentEvent = events[eventIndex];
 
+  let description = currentEvent.description;
+  let question = currentEvent.question;
+  mostRecentResult = currentEvent.results;
+  let choices = currentEvent.choices;
+  let box = gameScene.add.sprite((gameWidth / 2), (gameHeight / 3) - 50, 'textBox');
+  box.setScale(0.7);
+
+  let descriptionText = gameScene.add.text(210, 150, description, {color: 'black'});
+  let questionText = gameScene.add.text(210, 230, question, {color: 'black'});
+
+  let choice1Text = gameScene.add.text(215, 265, choices.choice1, {color:'black'})
+  let choice2Text = gameScene.add.text(215, 285, choices.choice2, {color:'black'})
+  textInteractive(choice1Text);
+  textInteractive(choice2Text);
+  choice1Text.on('pointerdown', function() {
+    let resultText = gameScene.add.text(215, 330, mostRecentResult, {color:'black'});
+    let okButton = gameScene.add.text(gameWidth / 2, 375, "OK", {color:'black'});
+    textInteractive(okButton);
+    okButton.on('pointerdown', function() {
+      box.destroy();
+      descriptionText.destroy();
+      questionText.destroy();
+      choice1Text.destroy();
+      choice2Text.destroy();
+      resultText.destroy();
+      okButton.destroy();
+      GAMESTATE = 1;
+    });
+  });
+  choice2Text.on('pointerdown', function() {
+    let resultText = gameScene.add.text(215, 330, mostRecentResult, {color:'black'});
+    let okButton = gameScene.add.text(gameWidth / 2, 375, "OK", {color:'black'});
+    textInteractive(okButton);
+    okButton.on('pointerdown', function() {
+      box.destroy();
+      descriptionText.destroy();
+      questionText.destroy();
+      choice1Text.destroy();
+      choice2Text.destroy();
+      resultText.destroy();
+      okButton.destroy();
+      GAMESTATE = 1;
+    });
+  });
+
+
+}
+
+// TO SET CHOICES TO HAVE INTERACTIVE BUTTONS
+function textInteractive(textChoice) {
+  textChoice.setInteractive();
+  textChoice.on('pointerover', function() {
+    textChoice.onClickTween = gameScene.tweens.add({
+      targets: textChoice,
+      scaleX: 1.1,
+      scaleY: 1.1,
+      duration: 300,
+      yoyo: true,
+      ease: 'Quad.easeIn',
+    });
+    textChoice.setColor('Red');
+  });
+
+  textChoice.on('pointerout', function() {
+    textChoice.onClickTween = gameScene.tweens.add({
+      targets: textChoice,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 300,
+      yoyo: true,
+      ease: 'Quad.easeIn',
+    });
+    textChoice.setColor('black');
+  });
 
 
 }

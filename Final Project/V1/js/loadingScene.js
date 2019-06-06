@@ -60,6 +60,7 @@ loadingScene.preload = function() {
     this.load.image('maleSprite', "assets/images/maleIndian.png");
     this.load.image('femaleChar', 'assets/images/female NA.jpg');
     this.load.image('femaleSprite', 'assets/images/femaleIndian.png');
+    this.load.image('textBox', 'assets/images/textBox.png');
 
 };
 
