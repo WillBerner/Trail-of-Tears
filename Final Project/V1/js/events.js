@@ -53,3 +53,7 @@ let event3 = new Event(description3, q3, someChoices3, result3);
 function chance() {
   chanceValue = Phaser.Math.Between(0, 100);
 }
+
+
+
+let events = [event1, event2, event3];

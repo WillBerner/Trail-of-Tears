@@ -2,6 +2,7 @@
 
 let left = true;
 let right = false;
+let lastDay = 0;
 // create a new scene
 let gameScene = new Phaser.Scene('Game');
 
@@ -104,8 +105,8 @@ gameScene.create = function() {
     //border = new Phaser.Geom.Rect(50, 50, 100, 100);
 
     graphics = this.add.graphics({
-        lineStyle: { width: 4, color: 0xaa00aa },
-        fillStyle: { color: 0xaa00aa, alpha: 1.0},
+        lineStyle: { width: 4, color: 0x89d3ff },
+        fillStyle: { color: 0x89d3ff, alpha: 1.0},
         //fillRect: {x: border.x, y: border.y, width: border.width, height: border.height}
     });
 
@@ -138,6 +139,8 @@ gameScene.update = function (time, delta) {
     if (player.x != destination.x) {
       this.physics.moveToObject(player, destination, 8);
 
+
+      // MAKING CHARACTER "WALK"
       if (left && !right) {
         player.angle +=2;
         if (player.angle >= 20) {
@@ -151,8 +154,9 @@ gameScene.update = function (time, delta) {
           right = false;
         }
       }
-
     }
+
+    // MAKING PLAYER MOVE
     if (this.gameData.playerPosX - player.x >= dayLength
         && character.water > 0
         && character.rations > 0){
@@ -164,12 +168,19 @@ gameScene.update = function (time, delta) {
         gameScene.waterText.setText('Water: ' + character.water);
     }
 
-
-    //graphics.strokeLineShape(trail);
+    // CHANGING DAY
     day = parseInt((start.x - player.x) / dayLength);
     if (day > 118) {
       day = 120;
     }
+
+    // CREATE QUASI-RANDOM EVENTS
+    if (day % 10 === 0 && !(lastDay === day)) {
+      randomEvent();
+      lastDay = day;
+    }
+
+
 
     gameScene.dayText.setText('Day: ' + day);
 
@@ -193,3 +204,10 @@ trailEvent = function() {
     this.scene.start('Trail Event')
 }
 };
+
+function randomEvent() {
+  let eventIndex = Phaser.Math.Between(0, 3);
+
+
+
+}
