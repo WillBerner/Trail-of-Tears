@@ -56,6 +56,10 @@ loadingScene.preload = function() {
     this.load.image('avatar', 'assets/images/rubber_duck.png');
     this.load.image('ball', 'assets/images/red-ball-md.png');
     this.load.image('tearsMap', 'assets/images/tearsMap.jpg');
+    this.load.image('maleChar', "assets/images/indian.jpg")
+    this.load.image('maleSprite', "assets/images/maleIndian.png");
+    this.load.image('femaleChar', 'assets/images/female NA.jpg');
+    this.load.image('femaleSprite', 'assets/images/femaleIndian.png');
 
 };
 

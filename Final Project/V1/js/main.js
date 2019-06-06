@@ -63,13 +63,6 @@ gameScene.init = function() {
 gameScene.preload = function () {
     // log we are now in "Boot Scene"
     console.log("Loading Scene: Game");
-    this.load.image('maleChar', "assets/images/indian.jpg")
-    this.load.image('maleSprite', "assets/images/maleIndian.png")
-    this.load.image('map', 'assets/images/1830 america .jpg');
-    this.load.image('avatar', 'assets/images/rubber_duck.png');
-    this.load.image('ball', 'assets/images/red-ball-md.png');
-    this.load.image('femaleChar', 'assets/images/female NA.jpg');
-    this.load.image('femaleSprite', 'assets/images/femaleIndian.png');
 
 };
 
