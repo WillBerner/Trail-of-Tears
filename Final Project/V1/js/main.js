@@ -119,9 +119,9 @@ gameScene.create = function() {
     this.dayText = this.add.text(16, 15, 'Day: 0', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.liveNumText = this.add.text(16, 30, 'Living: ' + character.living, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
     this.deadNumText = this.add.text(16, 45, 'Dead: ' + character.dead, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
-    this.rationText = this.add.text(16, 60, 'Rations: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
-    this.medicineText = this.add.text(16, 90, 'Medicine: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
-    this.waterText = this.add.text(16, 75, 'Water: 100', { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.rationText = this.add.text(16, 60, 'Rations: ' + character.rations, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.medicineText = this.add.text(16, 90, 'Medicine: '+ character.medicine, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
+    this.waterText = this.add.text(16, 75, 'Water: ' + character.water, { fontSize: '200px', fontStyle: 'Roboto', color: 'black' });
 
     this.textContainer.setScale(1.5);
     this.textContainer.add(this.dayText);
@@ -238,7 +238,7 @@ function updateStats() {
 function randomEvent() {
 
   // GET RANDOM EVENT OBJECT
-  let eventIndex = Phaser.Math.Between(0, 2);
+  let eventIndex = Phaser.Math.Between(0, events.length);
   eventIndex = Math.floor(eventIndex);
   let currentEvent = events[eventIndex];
   currentEvent = events[eventIndex];
