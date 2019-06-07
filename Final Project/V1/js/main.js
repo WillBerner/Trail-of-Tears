@@ -332,9 +332,12 @@ function miniGame() {
 
   gameScene.mg = false
 
+  let toDestroy = []
+
   let miniBackGround = gameScene.add.sprite(config.width, config.height, 'sandy');
   miniBackGround.setScale(0.7);
   miniBackGround.setOrigin(0, 0);
+  toDestroy.push(miniBackGround)
 
   console.log("minigame creating")
   let fire = gameScene.physics.add.staticGroup();
@@ -347,12 +350,14 @@ function miniGame() {
     fireY = Phaser.Math.FloatBetween(0, config.height);
     fire.create(fireX, fireY, 'fire');
   }
+  toDestroy.push(fire)
 
   //  Input Events
   let cursors = gameScene.input.keyboard.createCursorKeys();
   // The player and its settings
   let player = new Player(gameScene, 100, 450, cursors);
   player.setScale(.03);
+  toDestroy.push(player)
 
   // TLM: adding enemies
   let enemies = [];
@@ -362,6 +367,7 @@ function miniGame() {
     enemy.setVelocity(0, 0);
     enemy.setScale(.05);
     enemies.push(enemy)
+    toDestroy.push(enemy)
   }
   //this.enemy = this.add.existing(new enemy(this, 0, 0));
   //  Some rations to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
@@ -377,14 +383,15 @@ function miniGame() {
     let ration = gameScene.physics.add.sprite(starX, starY, 'food');
     ration.setScale(.05)
     ration.body.allowGravity = false;
-    rations.push(rations);
-
+    rations.push(ration);
+    toDestroy.push(ration)
   }
 
   //  The score
   let foodText = gameScene.add.text(16, 16, 'Food: -100', { fontSize: '32px', fill: '#000' });
   let waterText = gameScene.add.text(16, 40, 'Water: -100', { fontSize: '32px', fill: '#000' });
   let medicineText = gameScene.add.text(16, 64, 'Medicine: -100', { fontSize: '32px', fill: '#000' });
+  toDestroy.push(foodText, waterText, medicineText)
 
   //  Collide the player and the rations with the fire
   gameScene.physics.add.collider(player, fire);
@@ -425,11 +432,8 @@ function miniGame() {
 
     if (!hasActiveRations) {
       //  A new batch of rations to collect
-      rations.forEach(function (ration) {
-        ration.enableBody(true, rations.x, rations.y, true, true);
-      });
-
-
+      deleteItems(toDestroy)
+      GAMESTATE = 1;
     }
   }
 
@@ -444,11 +448,8 @@ function miniGame() {
     });
 
     if (!hasActiveRations) {
-      //  A new batch of rations to collect
-      this.rations.forEach(function (ration) {
-        ration.enableBody(true, rations.x, 0, true, true);
-      });
-
+      deleteItems(toDestroy)
+      GAMESTATE = 1;
     }
   }
 };
