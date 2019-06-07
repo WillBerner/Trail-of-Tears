@@ -63,6 +63,13 @@ loadingScene.preload = function() {
     this.load.image('nonBinaryChar', 'assets/images/nonBinaryChar.png');
     this.load.image('nonBinarySprite', 'assets/images/nonBinarySprite.png');
     this.load.image('textBox', 'assets/images/textBox.png');
+        this.load.image('miniBackground', 'assets/minigame/sandy.png');
+    this.load.image('fire', 'assets/minigame/flame.png');
+    this.load.image('food', 'assets/minigame/SAKURA MOCHI WITH TOOTHPICK.png');
+    //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 41, frameHeight: 21 });
+    this.load.image('dude', 'assets/minigame/miniMale.jpg');
+    this.load.image('soldier', 'assets/minigame/raider.png');
+    this.load.image('sandy', 'assets/minigame/sandy.png');
 
 };
 

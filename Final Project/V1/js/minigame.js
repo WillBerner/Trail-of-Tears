@@ -1,27 +1,29 @@
-let miniGame = new Phaser.Scene("Game");
+let miniGameScene = new Phaser.Scene("MiniGame");
 
-let config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
-    },
-    scene: miniGame
-};
+// let config = {
+//     type: Phaser.AUTO,
+//     width: 800,
+//     height: 600,
+//     physics: {
+//         default: 'arcade',
+//         arcade: {
+//             gravity: { y: 300 },
+//             debug: false
+//         }
+//     },
+//     scene: miniGameScene
+// };
+
+//config.scene.push(miniGameScene);
 
 let food = -100;
-let gameOver = false;
+let miniGameOver = false;
 
-let game = new Phaser.Game(config);
+//let miniGame = new Phaser.Game(config);
 
-miniGame.preload = function ()
+miniGameScene.preload = function ()
 {
-    this.load.image('background', 'assets/minigame/sandy.png');
+    this.load.image('miniBackground', 'assets/minigame/sandy.png');
     this.load.image('fire', 'assets/minigame/flame.png');
     this.load.image('star', 'assets/minigame/SAKURA MOCHI WITH TOOTHPICK.png');
     //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 41, frameHeight: 21 });
@@ -29,11 +31,11 @@ miniGame.preload = function ()
     this.load.image('ball', 'assets/minigame/raider.png');
 };
 
-miniGame.create = function ()
+miniGameScene.create = function ()
 {
     //  A simple background for our game
-    this.add.image(400, 300, 'background');
-
+    // this.add.image(400, 300, 'background');
+    console.log("minigame create")
     //  The platforms group contains the ground and the 2 ledges we can jump on
     this.platforms = this.physics.add.staticGroup();
 
@@ -100,8 +102,9 @@ miniGame.create = function ()
 
 };
 
-miniGame.update = function ()
+miniGameScene.update = function ()
 {
+    console.log("minigame update")
     if (gameOver)
     {
         return;

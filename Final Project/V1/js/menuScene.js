@@ -148,6 +148,7 @@ interactive(saveButton);
 saveButton.on('pointerdown', function() {
   character.name = name;
   menuScene.scene.start('Game');
+ console.log("entered name");
 })
 
 
