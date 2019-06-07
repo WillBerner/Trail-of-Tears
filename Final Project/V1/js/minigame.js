@@ -1,4 +1,4 @@
-let gameScene = new Phaser.Scene("Game");
+let miniGame = new Phaser.Scene("Game");
 
 let config = {
     type: Phaser.AUTO,
@@ -11,7 +11,7 @@ let config = {
             debug: false
         }
     },
-    scene: gameScene
+    scene: miniGame
 };
 
 let food = -100;
@@ -19,7 +19,7 @@ let gameOver = false;
 
 let game = new Phaser.Game(config);
 
-gameScene.preload = function ()
+miniGame.preload = function ()
 {
     this.load.image('background', 'assets/minigame/sandy.png');
     this.load.image('fire', 'assets/minigame/flame.png');
@@ -29,7 +29,7 @@ gameScene.preload = function ()
     this.load.image('ball', 'assets/minigame/raider.png');
 };
 
-gameScene.create = function ()
+miniGame.create = function ()
 {
     //  A simple background for our game
     this.add.image(400, 300, 'background');
@@ -100,7 +100,7 @@ gameScene.create = function ()
 
 };
 
-gameScene.update = function ()
+miniGame.update = function ()
 {
     if (gameOver)
     {
@@ -126,7 +126,7 @@ function collectStar (player, star)
         this.physics.add.collider(ball, this.player);
 
         this.physics.add.overlap(ball, this.stars, collectStar, null, this);
-        this.physics.add.overlap(ball, this.releasedStars, collectStar, null, this);
+        this.physics.add.overlap(ball, this.releasedStars, destroyStar, null, this);
 
         this.releasedBalls.push(star)
     }
@@ -180,7 +180,6 @@ function destroyStar(enemy, star) {
         this.stars.forEach(function (star) {
             star.enableBody(true, star.x, 0, true, true);
         });
-        addEnemy();
 
     }
 }
