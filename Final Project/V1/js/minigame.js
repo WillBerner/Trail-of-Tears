@@ -14,19 +14,19 @@ let config = {
     scene: gameScene
 };
 
-let score = 0;
+let food = -100;
 let gameOver = false;
 
 let game = new Phaser.Game(config);
 
 gameScene.preload = function ()
 {
-    this.load.image('background', 'assets/sandy.png');
-    this.load.image('ground', 'assets/flame.png');
-    this.load.image('star', 'assets/SAKURA MOCHI WITH TOOTHPICK.png');
+    this.load.image('background', 'assets/minigame/sandy.png');
+    this.load.image('fire', 'assets/minigame/flame.png');
+    this.load.image('star', 'assets/minigame/SAKURA MOCHI WITH TOOTHPICK.png');
     //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 41, frameHeight: 21 });
-    this.load.image('dude', 'assets/miniMale.jpg');
-    this.load.image('ball', 'assets/raider.png');
+    this.load.image('dude', 'assets/minigame/miniMale.jpg');
+    this.load.image('ball', 'assets/minigame/raider.png');
 };
 
 gameScene.create = function ()
@@ -39,12 +39,14 @@ gameScene.create = function ()
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this.platforms.create(400, 568, 'fire').setScale(2).refreshBody();
 
     //  Now let's create some ledges
-    this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
-    this.platforms.create(750, 220, 'ground');
+    for (let i = 0; i < 5; i++) {
+        fireX = Phaser.Math.FloatBetween(0, config.width);
+        fireY = Phaser.Math.FloatBetween(0, config.height);
+    this.platforms.create(fireX, fireY, 'fire');
+    }
 
     //  Input Events
     let cursors = this.input.keyboard.createCursorKeys();
@@ -83,7 +85,9 @@ gameScene.create = function ()
     }
 
     //  The score
-    this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    this.foodText = this.add.text(16, 16, 'Food: -100', { fontSize: '32px', fill: '#000' });
+    this.waterText = this.add.text(16, 40, 'Water: -100', { fontSize: '32px', fill: '#000' });
+    this.medicineText = this.add.text(16, 64, 'Medicine: -100', { fontSize: '32px', fill: '#000' });
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(this.player, this.platforms);
@@ -109,8 +113,8 @@ function collectStar (player, star)
 {
     star.disableBody(true, true);
     //  Add and update the score
-    score += 10;
-    this.scoreText.setText('Score: ' + score);
+    food += 10;
+    this.foodText.setText('Food: ' + food);
 
     // TLM: releasing a ball
     if (this.balls.length > 0) {
