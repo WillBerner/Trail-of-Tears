@@ -1,4 +1,4 @@
-let miniGame = new Phaser.Scene("Game");
+let miniGame = new Phaser.Scene("MiniGame");
 
 let config = {
     type: Phaser.AUTO,
@@ -17,7 +17,7 @@ let config = {
 let food = -100;
 let gameOver = false;
 
-let game = new Phaser.Game(config);
+let miniGame = new Phaser.Game(config);
 
 miniGame.preload = function ()
 {
