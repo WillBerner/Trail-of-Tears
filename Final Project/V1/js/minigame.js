@@ -81,7 +81,7 @@ gameScene.create = function ()
         star.setBounceY(bounciness);
         star.body.allowGravity = false;
         this.stars.push(star);
-        
+
     }
 
     //  The score
