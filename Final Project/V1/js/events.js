@@ -88,7 +88,7 @@ let event4 = new Event(description4, q4, someChoices4);
 /////////////////////////////////////////////////////////////////////
 
 let description5 = "An elderly woman in your tribe needs\nsurgery done to save her life.";
-let q5 = "Do you use 10 medicine to heal the woman?";
+let q5 = "Do you use 20 medicine to heal the woman?";
 let someChoices5 = {
   choice1: "We don't have enough as it is.",
   choice2: "We can leave nobody behind!",
@@ -96,7 +96,7 @@ let someChoices5 = {
   result2: "The woman is saved and you continue on",
   calculate: function(result) {
     if (result === this.choice2) {
-      character.medicine -= 5;
+      character.medicine -= 20;
     } else {
       character.living--;
       character.dead++;

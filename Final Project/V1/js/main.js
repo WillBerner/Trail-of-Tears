@@ -238,7 +238,7 @@ function updateStats() {
 function randomEvent() {
 
   // GET RANDOM EVENT OBJECT
-  let eventIndex = Phaser.Math.Between(0, events.length);
+  let eventIndex = Phaser.Math.Between(0, events.length - 1);
   eventIndex = Math.floor(eventIndex);
   let currentEvent = events[eventIndex];
   currentEvent = events[eventIndex];
