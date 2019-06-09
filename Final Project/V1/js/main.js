@@ -184,10 +184,10 @@ gameScene.update = function (time, delta) {
     }
 
     // TLM: Testing minigame as a function
-    if (day > 0 && this.mg) {
-      miniGame();
-      console.log("minigame exited")
-    }
+    // if (day > 0 && this.mg) {
+    //   miniGame();
+    //   console.log("minigame exited")
+    // }
 
     gameScene.dayText.setText('Day: ' + day);
 
@@ -325,6 +325,17 @@ function textInteractive(textChoice) {
 
 }
 
+
+
+/* Benno- I had a lot of trouble bringing the minigame into this folder (I had stupidly worked on it in 
+  a seperate file.)  I eventually tried to implement it as a function on the main file instead of
+  as it's own seperate scene, but I had a lot of difficulty getting that to work as well, especially
+  making the main avatar respond to the arrow keys.  The funciton below was the non-working
+  scaffolding that I have to date.  It is not set to be called during normal game play.
+  Unfortunately, I will not be able to work on the minigame anyomore,
+  and so this will be all the evidence of the mnigame idea at turn in. -Lyell
+*/
+
 function miniGame() {
 
   // TLM: pausing game
@@ -334,15 +345,13 @@ function miniGame() {
 
   let toDestroy = []
 
-  let miniBackGround = gameScene.add.sprite(config.width, config.height, 'sandy');
-  miniBackGround.setScale(0.7);
-  miniBackGround.setOrigin(0, 0);
-  toDestroy.push(miniBackGround)
+  gameScene.background = gameScene.add.sprite(config.width, config.height, 'sandy');
+  gameScene.background.setOrigin(0, 0)
+  gameScene.background.displayWidth = config.width;
+  gameScene.background.displayHeight = config.height
 
   console.log("minigame creating")
   let fire = gameScene.physics.add.staticGroup();
-
-  fire.create(400, 568, 'fire').setScale(2).refreshBody();
 
   //  Now let's create some ledges
   for (let i = 0; i < 5; i++) {
@@ -350,7 +359,7 @@ function miniGame() {
     fireY = Phaser.Math.FloatBetween(0, config.height);
     fire.create(fireX, fireY, 'fire');
   }
-  toDestroy.push(fire)
+  
 
   //  Input Events
   let cursors = gameScene.input.keyboard.createCursorKeys();
@@ -400,7 +409,7 @@ function miniGame() {
 
   //  Checks to see if the player overlaps with any of the rations, if he does call the collectStar function
   gameScene.physics.add.overlap(player, rations, collectStar, null, gameScene);
-  gameScene.physics.add.overlap(enemies, rations, collectStar, null, gameScene);
+  gameScene.physics.add.overlap(enemies, rations, destroyStar, null, gameScene);
   // Items to destroy
   //let toDestroy = [miniBackground];
   console.log("minigame created")
@@ -433,15 +442,17 @@ function miniGame() {
     if (!hasActiveRations) {
       //  A new batch of rations to collect
       deleteItems(toDestroy)
+      deleteItems(fire)
       GAMESTATE = 1;
     }
   }
 
   function destroyStar(enemy, ration) {
+    
     ration.disableBody(true, true);
     // check if all rations are collected
     let hasActiveRations = false;
-    this.rations.forEach(function (ration) {
+    rations.forEach(function (ration) {
       if (ration.active) {
        hasActiveRations = true;
       }
@@ -449,6 +460,7 @@ function miniGame() {
 
     if (!hasActiveRations) {
       deleteItems(toDestroy)
+      deleteItems(fire)
       GAMESTATE = 1;
     }
   }
