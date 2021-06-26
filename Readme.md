@@ -1,6 +1,6 @@
 # Trail of Tears
 
-A Javascript web game produced for a Serious Games course over a few weeks while studying abroad in Copenhagen. Created with two teammates each responsible for different parts of the small project.
+A Javascript web game produced for a Serious Games course over a few weeks while studying abroad in Copenhagen via DIS in 2019. Created with two teammates each responsible for different parts of the small project.
 
 Created with an idea similar to the well-known Oregon Trail, Trail of Tears is meant to test your luck to keep your people alive while demonstrating the distress and loss many Native Americans faced on the infamous march.
 
